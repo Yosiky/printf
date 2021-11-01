@@ -70,7 +70,6 @@ size_t	ft_char_d(int v)
 size_t	ft_char_u(unsigned int v)
 {
 	size_t	len;
-	char	flag;
 	char	res[11];
 
 	len = 0;
@@ -114,25 +113,24 @@ size_t	ft_char_X(size_t v)
 	return (len);
 }
 
-static	int		ft_choose(const char *str, size_t *len, va_list *v)
+static	void	ft_choose(const char *str, size_t *len, va_list *v)
 {
 	if (*(str + 1) == 's')
-		ft_char_s(va_arg(*v, char *));
+		*len += ft_char_s(va_arg(*v, char *));
 	else if (*(str + 1) == 'c')
-		ft_char_c(va_arg(*v, int));
+		*len += ft_char_c(va_arg(*v, int));
 	else if (*(str + 1) == 'd')
-		ft_char_d(va_arg(*v, int));
+		*len += ft_char_d(va_arg(*v, int));
 	else if (*(str + 1) == 'p')
-		ft_char_p((size_t)va_arg(*v, void *));
+		*len += ft_char_p((size_t)va_arg(*v, void *));
 	else if (*(str + 1) == 'i')
-		ft_char_d(va_arg(*v, int));
+		*len += ft_char_d(va_arg(*v, int));
 	else if (*(str + 1) == 'u')
-		ft_char_u(va_arg(*v, unsigned int));
+		*len += ft_char_u(va_arg(*v, unsigned int));
 	else if (*(str + 1) == 'x')
-		ft_char_x(va_arg(*v, int)); // ?
+		*len += ft_char_x(va_arg(*v, int)); // ?
 	else if (*(str + 1) == 'X')
-		ft_char_X(va_arg(*v, int));
-	*len += 1;
+		*len += ft_char_X(va_arg(*v, int));
 }
 
 static	int		ft_check(const char *str)
