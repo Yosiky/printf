@@ -30,7 +30,7 @@ size_t	ft_char_c(char v)
 	return (1);
 }
 
-size_t	ft_dectohex(size_t v, char *res, char flag)
+size_t	ft_dectohex(unsigned int v, char *res, char flag)
 {
 	const char	base_upper[] = "0123456789ABCDEF";
 	const char	base_lower[] = "0123456789abcdef";
@@ -50,11 +50,32 @@ size_t	ft_dectohex(size_t v, char *res, char flag)
 	return (len);
 }
 
+size_t	ft_dectohex_p(size_t v, char *res, char flag)
+{
+	const char	base_upper[] = "0123456789ABCDEF";
+	const char	base_lower[] = "0123456789abcdef";
+	char		*base;
+	size_t		len;
+
+	if (flag)
+		base = (char *)base_upper;
+	else
+		base = (char *)base_lower;
+	len = 0;
+	while (v)
+	{
+		res[16 - (len++)] = base[v % 16];
+		v /= 16;
+	}
+	return (len);
+}
+
 size_t	ft_char_d(int v)
 {
 	size_t	len;
 	char	flag;
 	char	res[11];
+	size_t  value;
 
 	if (v == 0)
 	{
@@ -63,15 +84,17 @@ size_t	ft_char_d(int v)
 	}
 	len = 0;
 	flag = 0;
+	value = v;
 	if (v < 0)
 	{
+		value *= -1;
 		flag = 1;
 		write(1, "-", 1);
 	}
-	while (v)
+	while (value)
 	{
-		res[10 - (len++)] = '0' + v % 10;
-		v /= 10;
+		res[10 - (len++)] = '0' + value % 10;
+		value /= 10;
 	}
 	write(1, res + 11 - len, len);
 	return (len + flag);
@@ -107,7 +130,7 @@ size_t	ft_char_p(size_t v)
 		write(1, "(nil)", 5);
 		return (5);
 	}
-	len = ft_dectohex(v, res, 0);
+	len = ft_dectohex_p(v, res, 0);
 	write(1, "0x", 2);
 	write(1, res + 17 - len, len);
 	return (len + 2);

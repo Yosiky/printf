@@ -5,10 +5,9 @@ SRC	=	\
 		ft_printf
 
 OBJ	=	$(SRC:=.o)
-NAME	= libftpintf.a
+NAME	= libftprintf.a
 
 .PHONY:	all clean fclean re
-
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
