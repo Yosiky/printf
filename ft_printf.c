@@ -194,37 +194,81 @@ static	void	ft_choose(const char *str, size_t *len, va_list *v)
 		*len += ft_char_proc();
 }
 
-static	int		ft_check(const char *str)
+static	int		ft_check_spec(const char str)
 {
-	if (*str == '%' && ((*(str + 1) == 'c' || *(str + 1) == 's'
-		|| *(str + 1) == 'p' || *(str + 1) == 'd'
-		|| *(str + 1) == 'i' || *(str + 1) == 'u'
-		|| *(str + 1) == 'x' || *(str + 1) == 'X'
-		|| *(str + 1) == '%')))
+	if (str == '\0')
+		return (-1);
+	else if (str == '%')
 		return (1);
+	else if (str == 'c' || str == 's')
+		return (2);
+	else if (str == 'p' || str == 'd' || str == 'i')
+		return (3);
+	else if (str == 'u')
+		return (4);
+	else if (str == 'x')
+		return (5);
+	else if (str == 'X')
+		return (6);
 	return (0);
+}
+
+static	int		ft_check_flag(const char c)
+{
+	if ('0' <= c && c <= '9')
+		return (1);
+	else if (c == '-')
+		return (2);
+	else if (c == '.')
+		return (3);
+	else if (c == '#')
+		return (4);
+	else if (c == ' ')
+		return (5);
+	else if (c == '+')
+		return (6);
+	return (0);
+}
+
+size_t	ft_flags(char **str, va_list args)
+{
+	size_t	i;
+	size_t	len;
+	t_flag	check;
+
+	check = {};
+	i = 0;
+	while (!ft_check((*str)[i]) && ft_check_flag((*str)[i]))
+		i++;
+	if (!ft_check_flag((*str)[i]) || (*str)[i] == '\0' || (*str)[i] == '%')
+	{
+		len = write(1, "%", 1);
+		i = 1;
+	}
+	else
+	{
+	}
+	str += i;
+	return (len);
 }
 
 int	ft_printf(const char *str, ...)
 {
 	va_list	args;
 	size_t	len;
+	size_t	count;
 
 	len = 0;
 	va_start(args, str);
 	while (*str != '\0')
 	{
-		if (ft_check(str))
-		{
-			ft_choose(str, &len, &args);
-			str += 2;
-		}
-		else	
-		{
-			write(1, str, 1);
-			len++;
-			str++;
-		}
+		count = 0;
+		while (str[count] != '%' && str[count] != '\0')
+			count++;
+		write(1, str, count);
+		str += count;
+		len += count;
+		len += ft_flags(&(++str), args);
 	}
 	va_end(args);
 	return (len);
