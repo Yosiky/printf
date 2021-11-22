@@ -1,275 +1,162 @@
 #include "ft_printf.h"
 
-size_t	ft_strlen(char *str)
+static	int	ft_isspace(int c)
 {
-	size_t	len;
-
-	len = 0;
-	while (str[len] != '\0')
-		len++;
-	return (len);
+	return (c == '\f' || c == '\n' || c == '\r'
+			|| c == '\t' || c == '\v' || c == ' ');
 }
 
-size_t	ft_char_s(char *v)
+int	ft_atoi(const char *str)
 {
-	size_t	len;
+	int		result;
+	char	sign;
 
-	if (v == NULL)
+	result = 0;
+	sign = 1;
+	while (ft_isspace(*(str)))
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		write(1, "(null)", 6);
-		return (6);
+		if (*(str++) == '-')
+			sign = -1;
 	}
-	len = ft_strlen(v);
-	write(1, v, len);
-	return (len);
-}
-
-size_t	ft_char_c(char v)
-{
-	write(1, &v, 1);
-	return (1);
-}
-
-size_t	ft_dectohex(unsigned int v, char *res, char flag)
-{
-	const char	base_upper[] = "0123456789ABCDEF";
-	const char	base_lower[] = "0123456789abcdef";
-	char		*base;
-	size_t		len;
-	
-	if (flag)
-		base = (char *)base_upper;
-	else
-		base = (char *)base_lower;
-	len = 0;
-	while (v)
+	while (*str != '\0' && ft_isdigit(*str))
 	{
-		res[16 - (len++)] = base[v % 16];
-		v /= 16;
+		if (result < 0)
+		{
+			if (sign == 1)
+				return (-1);
+			else
+				return (0);
+		}
+		result = result * 10 + (*(str++) - '0');
 	}
-	return (len);
+	return (result * (int)sign);
 }
 
-size_t	ft_dectohex_p(size_t v, char *res, char flag)
+static  int    ft_init(t_flag *fl, size_t *len, char *str)
 {
-	const char	base_upper[] = "0123456789ABCDEF";
-	const char	base_lower[] = "0123456789abcdef";
-	char		*base;
-	size_t		len;
-
-	if (flag)
-		base = (char *)base_upper;
-	else
-		base = (char *)base_lower;
-	len = 0;
-	while (v)
-	{
-		res[16 - (len++)] = base[v % 16];
-		v /= 16;
-	}
-	return (len);
+    if (str == NULL)
+        return (1);
+    fl->begin = 0;
+    fl->len = 0;
+    fl->min_len = 0;
+    fl->sharp = 0;
+    fl->sign = 0;
+    len = 0;
 }
 
-size_t	ft_char_d(int v)
+int		ft_ter(char value, int a, int b)
 {
-	size_t	len;
-	char	flag;
-	char	res[11];
-	size_t  value;
+	if (value)
+		return (a);
+	return (b);
+}
 
-	if (v == 0)
-	{
-		write(1, "0", 1);
+int 	ft_isnum(char c)
+{
+	return ('0' <= c && c <= '9');
+}
+
+int		ft_check_flag(char c)
+{
+	if (c == '-' || c == '.' || c == '#' ||
+		c == ' ' || c == '+' || ('0' <= c && c <= '9'))
 		return (1);
-	}
-	len = 0;
-	flag = 0;
-	value = v;
-	if (v < 0)
-	{
-		value *= -1;
-		flag = 1;
-		write(1, "-", 1);
-	}
-	while (value)
-	{
-		res[10 - (len++)] = '0' + value % 10;
-		value /= 10;
-	}
-	write(1, res + 11 - len, len);
-	return (len + flag);
-}
-
-size_t	ft_char_u(unsigned int v)
-{
-	size_t	len;
-	char	res[11];
-
-	len = 0;
-	if (v == 0)
-	{
-		write(1, "0", 1);
-		return (1);
-	}
-	while (v)
-	{
-		res[10 - (len++)] = '0' + v % 10;
-		v /= 10;
-	}
-	write(1, res + 11 - len, len);
-	return (len);
-}
-
-size_t	ft_char_p(size_t v)
-{
-	size_t	len;
-	char	res[17];
-
-	if (v == 0)
-	{
-		write(1, "(nil)", 5);
-		return (5);
-	}
-	len = ft_dectohex_p(v, res, 0);
-	write(1, "0x", 2);
-	write(1, res + 17 - len, len);
-	return (len + 2);
-}
-
-size_t	ft_char_x(size_t v)
-{
-	size_t	len;
-	char	res[17];
-
-	if (v == 0)
-	{
-		write(1, "0", 1);
-		return (1);
-	}
-	len = ft_dectohex(v, res, 0);
-	write(1, res + 17 - len, len);
-	return (len);
-}
-
-size_t	ft_char_X(size_t v)
-{
-	size_t	len;
-	char	res[17];
-
-	if (v == 0)
-	{
-		write(1, "0", 1);
-		return (1);
-	}
-	len = ft_dectohex(v, res, 1);
-	write(1, res + 17 - len, len);
-	return (len);
-}
-
-size_t	ft_char_proc(void)
-{
-	write(1, "%", 1);
-	return (1);
-}
-
-static	void	ft_choose(const char *str, size_t *len, va_list *v)
-{
-	if (*(str + 1) == 's')
-		*len += ft_char_s(va_arg(*v, char *));
-	else if (*(str + 1) == 'c')
-		*len += ft_char_c(va_arg(*v, int));
-	else if (*(str + 1) == 'd')
-		*len += ft_char_d(va_arg(*v, int));
-	else if (*(str + 1) == 'p')
-		*len += ft_char_p((size_t)va_arg(*v, void *));
-	else if (*(str + 1) == 'i')
-		*len += ft_char_d(va_arg(*v, int));
-	else if (*(str + 1) == 'u')
-		*len += ft_char_u(va_arg(*v, unsigned int));
-	else if (*(str + 1) == 'x')
-		*len += ft_char_x(va_arg(*v, int)); // ?
-	else if (*(str + 1) == 'X')
-		*len += ft_char_X(va_arg(*v, int));
-	else if (*(str + 1) == '%')
-		*len += ft_char_proc();
-}
-
-static	int		ft_check_spec(const char str)
-{
-	if (str == '\0')
-		return (-1);
-	else if (str == '%')
-		return (1);
-	else if (str == 'c' || str == 's')
-		return (2);
-	else if (str == 'p' || str == 'd' || str == 'i')
-		return (3);
-	else if (str == 'u')
-		return (4);
-	else if (str == 'x')
-		return (5);
-	else if (str == 'X')
-		return (6);
 	return (0);
 }
 
-static	int		ft_check_flag(const char c)
+size_t	ft_get_flag(char *str, t_flag *flag)
 {
-	if ('0' <= c && c <= '9')
+    size_t	i;
+
+    i = 1;
+    while (str[i] && ft_check_flag(str[i]))
+    {
+		flag->sharp = ft_ter(str[i] == '#', 1, flag->sharp);
+		if (flag->sign != 2)
+			flag->sign = ft_ter(str[i] == ' ', 1, flag->sign);
+		flag->sign = ft_ter(str[i] == '+', 2, flag->sign);
+		if (flag->begin != 2)
+			flag->begin = ft_ter(str[i] == '0', 1, flag->sign);
+		flag->begin = ft_ter(str[i] == '-', 2, flag->sign);
+		if (str[i] != '0' && ft_isnum(str[i]))
+			flag->min_len = ft_atoi(str, &i);
+		else if (str[i] == '.')
+			flag->len = ft_atoi(str, &(++i));
+    	else
+			i++;
+	}
+	return (i);
+}
+
+int 	ft_check_char(char c)
+{
+	if (c == 'd' || c == 'i')
 		return (1);
-	else if (c == '-')
+	else if (c == 'u')
 		return (2);
-	else if (c == '.')
+	else if (c == 'p')
 		return (3);
-	else if (c == '#')
+	else if (c == 'c')
 		return (4);
-	else if (c == ' ')
+	else if (c == 's')
 		return (5);
-	else if (c == '+')
+	else if (c == 'x')
 		return (6);
+	else if (c == 'X')
+		return (7);
+	else if (c == '%')
+		return (8);
 	return (0);
 }
 
-size_t	ft_flags(char **str, va_list args)
+static  size_t ft_todo(t_flag *flag, int c, va_list arg)
 {
-	size_t	i;
-	size_t	len;
-	t_flag	check;
+	size_t len;
 
-	check = {};
-	i = 0;
-	while (!ft_check((*str)[i]) && ft_check_flag((*str)[i]))
-		i++;
-	if (!ft_check_flag((*str)[i]) || (*str)[i] == '\0' || (*str)[i] == '%')
-	{
+	if (c == 1)
+		len = ft_char_d(flag, va_arg(arg, int));
+	else if (c == 2)
+		len = ft_char_u(flag, va_arg(arg, unsigned int));
+	else if (c == 3)
+		len = ft_char_p(flag, va_arg(arg, void *));
+	else if (c == 4)
+		len = ft_char_c(flag, va_arg(arg, char));
+	else if (c == 5)
+		len = ft_char_s(flag, va_arg(arg, char *));
+	else if (c == 6)
+		len = ft_char_x(flag, va_arg(arg, int));
+	else if (c == 7)
+		len = ft_char_X(flag, va_arg(arg, int));
+	else if (c == 8)
 		len = write(1, "%", 1);
-		i = 1;
-	}
-	else
-	{
-	}
-	str += i;
-	return (len);
+	return (0);
 }
 
 int	ft_printf(const char *str, ...)
 {
-	va_list	args;
-	size_t	len;
-	size_t	count;
+    va_list	args;
+    size_t	len;
+    size_t	i;
+    t_flag	flag;
 
-	len = 0;
-	va_start(args, str);
-	while (*str != '\0')
-	{
-		count = 0;
-		while (str[count] != '%' && str[count] != '\0')
-			count++;
-		write(1, str, count);
-		str += count;
-		len += count;
-		len += ft_flags(&(++str), args);
-	}
-	va_end(args);
-	return (len);
+    if (ft_init(&flag, &len, str))
+        return (0);
+    va_start(args, str);
+    while (*str != '\0')
+    {
+        i = 0;
+        while (str[i] != '%' || str[i] != '\0')
+            i++;
+        len += write(1, str, i);
+        str += i;
+        i = ft_get_flag(str, &flag);
+        if (ft_check_char(str[i]))
+            i += ft_todo(*flag, ft_check_char(str[i]));
+        else
+            str += write(1, str, i);
+    }
+    va_end(args);
+    return (len);
 }
