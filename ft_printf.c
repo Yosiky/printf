@@ -13,7 +13,7 @@ static  int    ft_init(t_flag *fl, size_t *len, const char *str)
 	return (0);
 }
 
-int 	ft_check_char(char c)
+static	int 	ft_check_char(char c)
 {
 	if (c == 'd' || c == 'i')
 		return (1);
@@ -38,19 +38,19 @@ int 	ft_check_char(char c)
 static  size_t ft_todo(t_flag *flag, int c, va_list arg)
 {
 	if (c == 1)
-		return (t_char_d(flag, va_arg(arg, int)));
+		return (ft_char_d(flag, va_arg(arg, int)));
 	else if (c == 2)
-		len = ft_char_u(flag, va_arg(arg, unsigned int));
+		return (ft_char_u(flag, va_arg(arg, unsigned int)));
 	else if (c == 3)
-		len = ft_char_p(flag, va_arg(arg, void *));
+		return (ft_char_p(flag, va_arg(arg, void *)));
 	else if (c == 4)
-		len = ft_char_c(flag, va_arg(arg, char));
+		return (ft_char_c(flag, va_arg(arg, int)));
 	else if (c == 5)
-		len = ft_char_s(flag, va_arg(arg, char *));
+		return (ft_char_s(flag, va_arg(arg, char *)));
 	else if (c == 6)
-		len = ft_char_x(flag, va_arg(arg, int));
+		return (ft_char_x(flag, va_arg(arg, int)));
 	else if (c == 7)
-		len = ft_char_X(flag, va_arg(arg, int));
+		return (ft_char_X(flag, va_arg(arg, int)));
 	else if (c == 8)
 		return (write(1, "%", 1));
 }
@@ -76,7 +76,7 @@ int	ft_printf(const char *str, ...)
         str += i;
         i = ft_get_flag(str, &flag);
 		if (ft_check_char(str[i]))
-            str += i + ft_todo(&flag, args);
+            str += i + ft_todo(&flag, i, args);
         else
             str += write(1, str, i);
 
