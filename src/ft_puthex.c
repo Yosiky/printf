@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:24 by eestelle          #+#    #+#             */
-/*   Updated: 2021/12/31 21:31:25 by eestelle         ###   ########.fr       */
+/*   Updated: 2021/12/31 21:35:20 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ft_putadd(va_list data)
 
 	value = (size_t)va_arg(data, void *);
 	if (value == 0)
-		write(1, "(nil)", 5);
+		return (write(1, "(nil)", 5));
 	else
 	{
 		write(1, "0x", 2);
