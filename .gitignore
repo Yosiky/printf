@@ -1,0 +1,5 @@
+obj/*
+*.swp
+tester_one/*
+*.a
+tester_one/*
