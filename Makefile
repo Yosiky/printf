@@ -1,27 +1,34 @@
-CC = gcc
-CFLAGS	= -Wall -Wextra -Werror -g
+CC 		=	gcc
+CFLAGS	=	#-Wall -Wextra -Werror
 
-SRC	=	\
-		ft_printf
+OBJ_DIR	=	obj
+SRC_DIR	=	src
 
-OBJ	=	$(SRC:=.o)
-NAME	= libftprintf.a
+SRC		=	main			\
+			ft_putsymbol	\
+			ft_putdigit		\
+			ft_puthex
 
-.PHONY:	all clean fclean re
-all:	$(NAME)
+OBJ		=	${addprefix $(OBJ_DIR)/,$(SRC:=.o)}
+HEADER	=	src/ft_printf.h
 
-$(NAME):	$(OBJ)
-	ar cr $(NAME) $(OBJ)
-	
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+NAME	=	libftprintf
+
+all:		$(OBJ_DIR) $(NAME)
+
+$(OBJ_DIR):
+	mkdir -p $@
+
+$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) $< -c -o $@
+
+$(NAME):	$(HEADER) $(OBJ) 
+	ar cr $(NAME).a $(OBJ)
 
 clean:
 	rm -rf $(OBJ)
 
 fclean:	clean
-	rm -rf $(NAME)
+	rm -rf $(NAME).a
 
-re:		\
-		fclean	\
-		all
+re:	fclean all
