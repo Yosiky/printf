@@ -32,3 +32,5 @@ fclean:	clean
 	rm -rf $(NAME).a
 
 re:	fclean all
+
+bonus: all

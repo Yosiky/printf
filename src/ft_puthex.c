@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_puthex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eestelle <eestelle>                        +#+  +:+       +#+        */
+/*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:24 by eestelle          #+#    #+#             */
-/*   Updated: 2021/12/31 21:35:20 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/05 21:44:31 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,31 @@ static int	ft_dectohex(char *buff, size_t l, unsigned int value, int flag)
 	return (len);
 }
 
-int	ft_puthex_lower(va_list data)
+int	ft_puthex_lower(va_list data, int flag)
 {
 	int		len;
 	char	buff[12];
 
 	len = ft_dectohex(buff, 12, va_arg(data, int), 0);
-	return (write(1, buff + 12 - len, len));
+	if (flag == 1 && !(len == 1 && buff[11] == '0'))
+		return (write(1, "0x", 2) + write(1, buff + 12 - len, len));
+	else
+		return (write(1, buff + 12 - len, len));
 }
 
-int	ft_puthex_upper(va_list data)
+int	ft_puthex_upper(va_list data, int flag)
 {
 	int		len;
 	char	buff[12];
 
 	len = ft_dectohex(buff, 12, va_arg(data, int), 1);
-	return (write(1, buff + 12 - len, len));
+	if (flag == 1 && !(len == 1 && buff[11] == '0'))
+		return (write(1, "0X", 2) + write(1, buff + 12 - len, len));
+	else
+		return (write(1, buff + 12 - len, len));
 }
 
-int	ft_putadd(va_list data)
+int	ft_putadd(va_list data, __attribute((unused)) int flag)
 {
 	char	buff[20];
 	int		count;

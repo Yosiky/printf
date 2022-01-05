@@ -6,13 +6,13 @@
 /*   By: eestelle <eestelle>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:39 by eestelle          #+#    #+#             */
-/*   Updated: 2021/12/31 21:31:44 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/05 20:38:37 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_strlen(char *str)
+static int	ft_strlen(char *str)
 {
 	int	len;
 
@@ -22,7 +22,7 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-int	ft_putchar(va_list data)
+int	ft_putchar(va_list data, __attribute__((unused)) int flag)
 {
 	char	c;
 
@@ -30,7 +30,7 @@ int	ft_putchar(va_list data)
 	return (write(1, &c, 1));
 }
 
-int	ft_putstr(va_list data)
+int	ft_putstr(va_list data, __attribute__((unused)) int flag)
 {
 	char	*str;
 
@@ -40,8 +40,7 @@ int	ft_putstr(va_list data)
 	return (write(1, str, ft_strlen(str)));
 }
 
-int	ft_putprecent(va_list data)
+int	ft_putprecent(__attribute__((unused)) va_list data, __attribute__((unused)) int flag)
 {
-	if (1 || data)
-		return (write(1, "%", 1));
+	return (write(1, "%", 1));
 }
