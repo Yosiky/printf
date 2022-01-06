@@ -6,19 +6,11 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:10 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/05 22:21:26 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/06 13:49:56 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-/*
-static void	ft_init(char *str, int value)
-{
-	if (value < 0)
-		str[0] = '-';
-	else if (value == 0)
-		str[0] = '0';
-}*/
 
 static int	check_flag(int flag, long long *value)
 {
@@ -38,9 +30,11 @@ static int	check_flag(int flag, long long *value)
 			return (write(1, "-", 1));
 		}
 	}
-	if (*value < 0)
+	if (*value <= 0)
 	{
 		*value *= -1;
+		if (*value == 0)
+			return (write(1, "0", 1));
 		return (write(1, "-", 1));
 	}
 	return (0);
@@ -66,25 +60,14 @@ int	ft_putdigit(va_list data, int flag)
 	return (count + f);
 }
 
-static int	check_flag_u(int flag)
-{
-	if (flag == 2)
-		return (write(1, " ", 1));
-	else if (flag == 3)
-		return (write(1, "+", 1));
-	return (0);
-}
-
-int	ft_putudigit(va_list data, int flag)
+int	ft_putudigit(va_list data, __attribute((unused)) int flag)
 {
 	unsigned int	value;
 	int				count;
 	char			buff[12];
-	int				f;
 
 	count = 0;
 	value = va_arg(data, int);
-	f = check_flag_u(flag);
 	if (value == 0)
 	{
 		buff[11] = '0';
@@ -97,5 +80,5 @@ int	ft_putudigit(va_list data, int flag)
 		value /= 10;
 	}
 	write(1, buff + 12 - count, count);
-	return (count + f);
+	return (count);
 }

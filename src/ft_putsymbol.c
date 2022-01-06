@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putsymbol.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eestelle <eestelle>                        +#+  +:+       +#+        */
+/*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:39 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/05 20:38:37 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/06 13:54:44 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int	ft_putstr(va_list data, __attribute__((unused)) int flag)
 	return (write(1, str, ft_strlen(str)));
 }
 
-int	ft_putprecent(__attribute__((unused)) va_list data, __attribute__((unused)) int flag)
+int	ft_putprecent(
+	__attribute__((unused)) va_list data,
+	__attribute__((unused)) int flag)
 {
 	return (write(1, "%", 1));
 }

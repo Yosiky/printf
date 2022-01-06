@@ -3,3 +3,4 @@ obj/*
 tester_one/*
 *.a
 tester_one/*
+tester*/
