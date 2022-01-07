@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:39 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/06 13:54:44 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/07 19:08:37 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_strlen(char *str)
 	return (len);
 }
 
-int	ft_putchar(va_list data, __attribute__((unused)) int flag)
+int	ft_putchar(va_list data, __attribute__((unused)) flag_t *flag)
 {
 	char	c;
 
@@ -30,7 +30,7 @@ int	ft_putchar(va_list data, __attribute__((unused)) int flag)
 	return (write(1, &c, 1));
 }
 
-int	ft_putstr(va_list data, __attribute__((unused)) int flag)
+int	ft_putstr(va_list data, __attribute__((unused)) flag_t *flag)
 {
 	char	*str;
 
@@ -42,7 +42,7 @@ int	ft_putstr(va_list data, __attribute__((unused)) int flag)
 
 int	ft_putprecent(
 	__attribute__((unused)) va_list data,
-	__attribute__((unused)) int flag)
+	__attribute__((unused)) flag_t *flag)
 {
 	return (write(1, "%", 1));
 }

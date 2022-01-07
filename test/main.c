@@ -3,7 +3,7 @@
 
 int	main(void)
 {
-	int		d = 0;
+	int		d = 10;
 	char	c = 'a';
 	char	*s = 0;
 

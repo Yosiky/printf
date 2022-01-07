@@ -3,44 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosiky <yosiky@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:57 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/05 21:41:00 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/07 19:24:36 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	check_flag(const char **c, int *i)
+static void	check_flag(const char **c, int *i, flag_t *flag)
 {
+	flag->sharp = 0;
+	flag->plus = 0;
+	flag->space = 0;
 	while (**c == '#' || **c == ' ' || **c == '+')
 	{
+		if (**c == ' ')
+			flag->space = 1;
+		else if (**c == '+')
+			flag->plus = 1;
+		else if (**c == '#')
+			flag->sharp = 1;
 		(*c)++;
 		(*i)++;
 	}
-	if ((*(*c - 1)) == '#')
-		return (1);
-	else if ((*(*c - 1)) == ' ')
-		return (2);
-	else if ((*(*c - 1)) == '+')
-		return (3);
-	return (0);
 }
 
 static int	ft_check_character(const char *c, va_list data, int *i)
 {
 	static const char	buff[] = "cspdiuxX%";
-	static int			(*func[])(va_list, int) = {
+	static int			(*func[])(va_list, flag_t *) = {
 		ft_putchar, ft_putstr, ft_putadd,
 		ft_putdigit, ft_putdigit, ft_putudigit,
 		ft_puthex_lower, ft_puthex_upper, ft_putprecent
 	};
 	size_t				len;
-	int					flag;
+	flag_t				flag;
 
-	flag = check_flag(&c, i);
 	len = 0;
+	check_flag(&c, i, &flag);
 	while (buff[len])
 	{
 		if (*c != buff[len])
@@ -48,7 +50,7 @@ static int	ft_check_character(const char *c, va_list data, int *i)
 		else
 		{
 			(*i)++;
-			return (func[len](data, flag));
+			return (func[len](data, &flag));
 		}
 	}
 	return (0);
