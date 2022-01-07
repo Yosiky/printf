@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "../src/ft_printf.h"
 
 int	main(void)
 {
@@ -17,16 +18,16 @@ int	main(void)
 	printf("X = \'%x\'\n", d);
 	printf("x = \'%X\'\n", d);
 	printf("% = \'%%\'\n", d);
-	printf("FT_TEST:\n");
-	printf("d = \'%d\'\n", d);
-	printf("c = \'%c\'\n", c);
-	printf("s = \'%s\'\n", s);
-	printf("i = \'%i\'\n", d);
-	printf("p = \'%p\'\n", d);
-	printf("u = \'%u\'\n", d);
-	printf("X = \'%x\'\n", d);
-	printf("x = \'%X\'\n", d);
-	printf("% = \'%%\'\n", d);
+	ft_printf("FT_TEST:\n");
+	ft_printf("d = \'%d\'\n", d);
+	ft_printf("c = \'%c\'\n", c);
+	ft_printf("s = \'%s\'\n", s);
+	ft_printf("i = \'%i\'\n", d);
+	ft_printf("p = \'%p\'\n", d);
+	ft_printf("u = \'%u\'\n", d);
+	ft_printf("X = \'%x\'\n", d);
+	ft_printf("x = \'%X\'\n", d);
+	ft_printf("% = \'%%\'\n", d);
 	printf("TEST (#):\n");
 	printf("d = \'%####d\'\n", d);
 	printf("c = \'%####c\'\n", c);
@@ -37,16 +38,16 @@ int	main(void)
 	printf("X = \'%####x\'\n", d);
 	printf("x = \'%####X\'\n", d);
 	printf("% = \'%####%\'\n", d);
-	printf("FT_TEST (#):\n");
-	printf("d = \'%####d\'\n", d);
-	printf("c = \'%####c\'\n", c);
-	printf("s = \'%####s\'\n", s);
-	printf("i = \'%####i\'\n", d);
-	printf("p = \'%####p\'\n", d);
-	printf("u = \'%####u\'\n", d);
-	printf("X = \'%####x\'\n", d);
-	printf("x = \'%####X\'\n", d);
-	printf("% = \'%####%\'\n", d);
+	ft_printf("FT_TEST (#):\n");
+	ft_printf("d = \'%####d\'\n", d);
+	ft_printf("c = \'%####c\'\n", c);
+	ft_printf("s = \'%####s\'\n", s);
+	ft_printf("i = \'%####i\'\n", d);
+	ft_printf("p = \'%####p\'\n", d);
+	ft_printf("u = \'%####u\'\n", d);
+	ft_printf("X = \'%####x\'\n", d);
+	ft_printf("x = \'%####X\'\n", d);
+	ft_printf("% = \'%####%\'\n", d);
 	printf("TEST ( ):\n");
 	printf("d = \'%  d\'\n", d);
 	printf("c = \'%  c\'\n", c);
@@ -57,16 +58,16 @@ int	main(void)
 	printf("x = \'%  x\'\n", d);
 	printf("X = \'%  X\'\n", d);
 	printf("% = \'%  %\'\n", d);
-	printf("FT_TEST ( ):\n");
-	printf("d = \'%  d\'\n", d);
-	printf("c = \'%  c\'\n", c);
-	printf("s = \'%  s\'\n", s);
-	printf("i = \'%  i\'\n", d);
-	printf("p = \'%  p\'\n", d);
-	printf("u = \'%  u\'\n", d);
-	printf("x = \'%  x\'\n", d);
-	printf("X = \'%  X\'\n", d);
-	printf("% = \'%  %\'\n", d);
+	ft_printf("FT_TEST ( ):\n");
+	ft_printf("d = \'%  d\'\n", d);
+	ft_printf("c = \'%  c\'\n", c);
+	ft_printf("s = \'%  s\'\n", s);
+	ft_printf("i = \'%  i\'\n", d);
+	ft_printf("p = \'%  p\'\n", d);
+	ft_printf("u = \'%  u\'\n", d);
+	ft_printf("x = \'%  x\'\n", d);
+	ft_printf("X = \'%  X\'\n", d);
+	ft_printf("% = \'%  %\'\n", d);
 	printf("TEST (+):\n");
 	printf("d = \'%++d\'\n", d);
 	printf("c = \'%++c\'\n", c);
@@ -76,14 +77,14 @@ int	main(void)
 	printf("u = \'%++u\'\n", d);
 	printf("x = \'%++x\'\n", d);
 	printf("X = \'%++X\'\n", d);
-	printf("FT_TEST (+):\n");
-	printf("d = \'%++d\'\n", d);
-	printf("c = \'%++c\'\n", c);
-	printf("s = \'%++s\'\n", s);
-	printf("i = \'%++i\'\n", d);
-	printf("p = \'%++p\'\n", d);
-	printf("u = \'%++u\'\n", d);
-	printf("x = \'%++x\'\n", d);
-	printf("X = \'%++X\'\n", d);
+	ft_printf("FT_TEST (+):\n");
+	ft_printf("d = \'%++d\'\n", d);
+	ft_printf("c = \'%++c\'\n", c);
+	ft_printf("s = \'%++s\'\n", s);
+	ft_printf("i = \'%++i\'\n", d);
+	ft_printf("p = \'%++p\'\n", d);
+	ft_printf("u = \'%++u\'\n", d);
+	ft_printf("x = \'%++x\'\n", d);
+	ft_printf("X = \'%++X\'\n", d);
 	return (0);
 }
