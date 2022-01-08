@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:57 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/08 02:30:00 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/08 04:01:28 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static void	check_flag( char *str, int *i, t_flag *flag)
 {
 	while (check_char(str[*i]))
 	{
-		if (str[*i - 1] == '#')
+		if (str[*i] == '#')
 			flag->sharp = 1;
 		else if (str[*i] == '+')
 			flag->plus_space = '+';

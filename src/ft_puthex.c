@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:24 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/08 03:43:24 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/08 04:11:20 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static int	ft_dectohex(char *buff, size_t l, unsigned int value, int flag)
 	else
 		hex = (char *)hex_lower;
 	len = 0;
-	if ((int)value < 0)
-		buff[0] = hex[15];
+	buff[0] = hex[15];
 	if (value == 0)
 	{
 		buff[l - 1] = '0';
@@ -63,7 +62,7 @@ static int	ft_func_one(t_flag *flag, int f1, int f2)
 		if (f2 == 'f')
 			len += write(1, "0x", 2);
 		else
-			len += write(1, "OX", 2);
+			len += write(1, "0X", 2);
 	}
 	while (flag->widht > 0)
 	{
@@ -76,7 +75,7 @@ static int	ft_func_one(t_flag *flag, int f1, int f2)
 		if (f2 == 'f')
 			len += write(1, "0x", 2);
 		else
-			len += write(1, "OX", 2);
+			len += write(1, "0X", 2);
 	}
 	return (len);
 }
@@ -101,6 +100,13 @@ static int	ft_check_flag(t_flag *flag, int count, int f1, char f2)
 	flag->widht -= ft_max(count, flag->precision, flag->flag_p);
 	if (flag->minus_zero != '-')
 		len += ft_func_one(flag, f1, f2);
+	else if (flag->sharp && !f1)
+	{
+		if (f2 == 'f')
+			len += write(1, "0x", 2);
+		else
+			len += write(1, "0X", 2);
+	}		
 	while (flag->precision > count)
 	{
 		flag->precision--;

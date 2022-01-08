@@ -6,13 +6,13 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:10 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/08 03:16:09 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/08 03:38:57 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_max(int a, int b, int c)
+static int ft_max(int a, int b, int c)
 {
 	if (c)
 	{
@@ -23,7 +23,7 @@ int ft_max(int a, int b, int c)
 	return (a);
 }
 
-int	ft_func_one(t_flag *flag, int f1)
+static int	ft_func_one(t_flag *flag, int f1)
 {
 	int	len;
 
