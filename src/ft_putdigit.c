@@ -6,13 +6,13 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:10 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/08 03:38:57 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/08 15:03:25 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int ft_max(int a, int b, int c)
+static int	ft_max(int a, int b, int c)
 {
 	if (c)
 	{
@@ -56,7 +56,7 @@ static int	check_flag(t_flag *flag, int count, int f1)
 	int	len;
 
 	len = 0;
-	flag->widht -= f1 || flag->plus_space;
+	flag->widht -= (f1 || flag->plus_space);
 	flag->widht -= ft_max(count, flag->precision, flag->flag_p);
 	if (flag->minus_zero != '-')
 		len += ft_func_one(flag, f1);
@@ -117,11 +117,11 @@ int	ft_putdigit(va_list data, t_flag *flag)
 	return (count + f);
 }
 
-int	ft_putudigit(va_list data, __attribute((unused)) t_flag *flag)
+int	ft_putudigit(va_list data, t_flag *flag)
 {
 	unsigned int	value;
 	int				count;
-	int             f;
+	int				f;
 	char			buff[12];
 
 	flag->plus_space = 0;

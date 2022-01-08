@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:57 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/08 04:01:28 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/08 14:55:02 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static int	check_char(char c)
 {
-	return (c == '-' || c == '#' || c == ' ' || c == '+' || c == '*' ||
-		('0' <= c && c <= '9'));
+	return (c == '-' || c == '#' || c == ' ' || c == '+' || c == '*'
+		|| ('0' <= c && c <= '9'));
 }
 
-static int  ft_isnum(char c)
+static int	ft_isnum(char c)
 {
 	return ('0' <= c && c <= '9');
 }
 
-int ft_atoi(const char *c, int *i, int flag)
+int	ft_atoi(const char *c, int *i, int flag)
 {
-	int value;
+	int	value;
 
 	value = 0;
 	if (flag)
@@ -65,36 +65,7 @@ void	check_t_flag(t_flag *flag, va_list data, const char *c, int *i)
 	}
 }
 
-
-
-/*
-static int	ft_check_character(char *str)
-{
-	static const char	buff[] = "cspdiuxX%";
-	static int			(*func[])(va_list, t_flag *) = {
-		ft_putchar, ft_putstr, ft_putadd, ft_putdigit, ft_putdigit,
-		ft_putudigit, ft_puthex_lower, ft_puthex_upper, ft_putprecent};
-	size_t				len;
-	t_flag				flag;
-
-	len = 0;
-	flag_init(&flag);
-	check_flag(&c, i, &flag, data);
-	check_t_flag(&flag, data, &c, i);
-	while (buff[len])
-	{
-		if (*c != buff[len])
-			len++;
-		else
-		{
-			++(*i);
-			return (func[len](data, &flag));
-		}
-	}
-	return (0);
-}*/
-
-void    flag_init(t_flag *flag)
+void	flag_init(t_flag *flag)
 {
 	flag->flag_w = 0;
 	flag->flag_p = 0;
