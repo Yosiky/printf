@@ -6,25 +6,13 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 21:31:39 by eestelle          #+#    #+#             */
-/*   Updated: 2022/01/08 14:51:11 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/01/10 16:42:16 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_strlen(char *str)
-{
-	int	len;
-
-	len = 0;
-	if (str == NULL)
-		return (0);
-	while (str[len] != 0)
-		len++;
-	return (len);
-}
-
-int	ft_check_flag(t_flag *flag)
+static int	ft_check_flag_c(t_flag *flag)
 {
 	int	len;
 
@@ -48,7 +36,7 @@ int	ft_putchar(va_list data, t_flag *flag)
 	int		len;
 
 	c = va_arg(data, int);
-	len = ft_check_flag(flag);
+	len = ft_check_flag_c(flag);
 	len += write(1, &c, 1);
 	while (flag->minus_zero == '-' && flag->widht > 0)
 	{
@@ -58,7 +46,7 @@ int	ft_putchar(va_list data, t_flag *flag)
 	return (len);
 }
 
-int	ft_check_flag_s(t_flag *flag, int *count, int f1)
+static int	ft_check_flag_s(t_flag *flag, int *count, int f1)
 {
 	int	len;
 
