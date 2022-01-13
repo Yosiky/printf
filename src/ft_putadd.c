@@ -31,7 +31,19 @@ static int	ft_dectohex(char *buff, size_t l, size_t value)
 	return (len);
 }
 
-static int	ft_func_two(t_flag *flag)
+static int	ft_add_print(t_flag *flag, int f1)
+{
+	int	len;
+
+	len = 0;
+	if (f1)
+		len += write(1, "-", 1);
+	else if (flag->plus_space)
+		len += write(1, &(flag->plus_space), 1);
+	return (len + write(1, "0x", 2));
+}
+
+static int	ft_func_two(t_flag *flag, int f1)
 {
 	int	len;
 
@@ -45,7 +57,11 @@ static int	ft_func_two(t_flag *flag)
 		flag->widht--;
 	}
 	if (flag->minus_zero == ' ' || flag->minus_zero == '-')
-		len += write(1, &(flag->plus_space), 1) + write(1, "0x", 2);
+	{
+		if (flag->plus_space)
+			len += write(1, &(flag->plus_space), 1);
+		len += write(1, "0x", 2);
+	}
 	return (len);
 }
 
@@ -84,5 +100,5 @@ int	ft_putadd(va_list data, t_flag *flag)
 		f += write(1, " ", 1);
 		flag->widht--;
 	}
-	return (f + 5 * (value == 0));
+	return (f);
 }
