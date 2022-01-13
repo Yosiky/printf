@@ -46,14 +46,14 @@ int	ft_putchar(va_list data, t_flag *flag)
 	return (len);
 }
 
-static int	ft_check_flag_s(t_flag *flag, int *count, int f1)
+static int	ft_check_flag_s(t_flag *flag, int *count)
 {
 	int	len;
 
 	len = 0;
 	if ((flag->flag_p) && (flag->precision < *count))
 		*count = flag->precision;
-	flag->widht -= *count + f1 * !(*count) * 6;
+	flag->widht -= *count;
 	if (flag->minus_zero != '-')
 	{
 		while (flag->widht > 0)
@@ -73,12 +73,11 @@ int	ft_putstr(va_list data, t_flag *flag)
 	int		slen;
 
 	str = va_arg(data, char *);
+	if (str == NULL)
+		str = "(null)";
 	slen = ft_strlen(str);
-	len = ft_check_flag_s(flag, &slen, str == NULL);
-	if (str == NULL && !(flag->flag_p && flag->precision < 6))
-		len += write(1, "(null)", 6);
-	else
-		len += write(1, str, slen);
+	len = ft_check_flag_s(flag, &slen);
+	len += write(1, str, slen);
 	while (flag->minus_zero == '-' && flag->widht > 0)
 	{
 		flag->widht--;
