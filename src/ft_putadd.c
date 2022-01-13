@@ -31,19 +31,7 @@ static int	ft_dectohex(char *buff, size_t l, size_t value)
 	return (len);
 }
 
-static int	ft_add_print(t_flag *flag, int f1)
-{
-	int	len;
-
-	len = 0;
-	if (f1)
-		len += write(1, "-", 1);
-	else if (flag->plus_space)
-		len += write(1, &(flag->plus_space), 1);
-	return (len + write(1, "0x", 2));
-}
-
-static int	ft_func_two(t_flag *flag, int f1)
+static int	ft_func_two(t_flag *flag)
 {
 	int	len;
 
